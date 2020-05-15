@@ -1,3 +1,38 @@
+## intent:ask_four_language_questions
+- Which languages do you speak?
+- Do you speak Lingala?
+- Do you speak Nande?
+- How many languages do you speak?
+- I don't understand you
+
+## intent:get_contact_details
+- I'd like to get to know you better
+
+## intent:ask_for_stats
+- How many people have the coronavirus
+- Give me some statistics
+- How many people are infected
+
+## intent:get_feedback
+- I'm done
+- We're done
+- That's great, thanks
+- I have all I need
+
+## intent:affirm
+- yes
+- indeed
+- of course
+- that sounds good
+- correct
+
+## intent:deny
+- no
+- never
+- I don't think so
+- don't like that
+- no way
+- not really
 
 ## intent:covid_myth_cure
 - Can people be cured of COVID-19?

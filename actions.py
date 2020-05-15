@@ -4,24 +4,147 @@
 # See this guide on how to implement these action:
 # https://rasa.com/docs/rasa/core/actions/#custom-actions/
 
-
 # This is a simple example for a custom action which utters "Hello World!"
 
 # from typing import Any, Text, Dict, List
 #
-# from rasa_sdk import Action, Tracker
-# from rasa_sdk.executor import CollectingDispatcher
-#
-#
-# class ActionHelloWorld(Action):
-#
-#     def name(self) -> Text:
-#         return "action_hello_world"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#         dispatcher.utter_message(text="Hello World!")
-#
-#         return []
+from rasa_sdk import Action, Tracker
+from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.events import SlotSet
+from rasa_sdk.forms import FormAction
+from typing import Dict, Text, Any, List, Union
+
+import json
+import requests
+
+class ActionGetIssueDetails(Action):
+
+    def name(self) -> Text:
+        return "action_get_issue_details"
+
+    @staticmethod
+    def required_slots(tracker: Tracker) -> List[Text]:
+        """A list of required slots that the form has to fill"""
+
+        return ["issue_type","issue_detail"]
+
+
+    def submit(self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        dispatcher.utter_message(template="utter_submit")
+
+class ContactDetailsForm(FormAction):
+
+    def name(self) -> Text:
+        return "contact_details_form"
+
+    @staticmethod
+    def required_slots(tracker: Tracker) -> List[Text]:
+
+        return["name", "mail"]
+
+    def slot_mappings(self) -> Text:
+        return {
+        "name": self.from_text(intent=None),
+        "mail": self.from_text(intent=None)
+        }
+
+    def submit(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        dispatcher.utter_message(template="utter_greet_with_name")
+        return[]
+
+
+class FeedbackForm(FormAction):
+
+    def name(self) -> Text:
+        return "feedback_form"
+
+    @staticmethod
+    def required_slots(tracker: Tracker) -> List[Text]:
+
+        if tracker.get_slot("feedback") == False:
+            return["feedback", "feedback_reason"]
+        else:
+            return["feedback"]
+
+    def slot_mappings(self) -> Text:
+        return {
+        "feedback": [
+            self.from_intent(intent="affirm", value=True),
+            self.from_intent(intent="deny", value=False),
+            ],
+        "feedback_reason": self.from_text()
+        }
+
+    def submit(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        dispatcher.utter_message(template="utter_thanks_for_your_feedback")
+        return[]
+
+class LanguageQuestionsForm(FormAction):
+
+    def name(self) -> Text:
+        return "language_questions_form"
+
+    @staticmethod
+    def required_slots(tracker: Tracker) -> List[Text]:
+
+        return["language_at_home","language_for_written_comms","language_for_verbal_comms","preferred_channel"]
+
+    def slot_mappings(self) -> Text:
+        return {
+        "language_at_home": self.from_text(),
+        "language_for_written_comms": self.from_text(),
+        "language_for_verbal_comms": self.from_text(),
+        "preferred_channel": self.from_text(),
+        }
+
+    def submit(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        dispatcher.utter_message(template="utter_thanks_for_your_feedback")
+        return[]
+
+
+class ActionGetInfectionStats(Action):
+
+    def name(self) -> Text:
+        return "action_get_infection_stats"
+
+    def run(self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # this is where to paste the call to API
+        country = "DRC"
+        url = "https://covid-193.p.rapidapi.com/statistics"
+        headers = { 'x-rapidapi-host': "covid-193.p.rapidapi.com", 'x-rapidapi-key': "c41cd0c62dmshb99d2fb0a63207dp1775a0jsna4f33aea1040"}
+        query_string = {"country":country}
+
+        # get the response
+        response = requests.request("GET", url, headers=headers, params=query_string)
+        response_JSON = response.json()
+
+        #get the bits of the response we want
+        active = response_JSON['response'][0]['cases']['active']
+        new = response_JSON['response'][0]['cases']['new']
+
+        dispatcher.utter_message(text=f'There are {active} people infected in {country}, a change of {new} on yesterday.')
+
+        return []

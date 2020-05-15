@@ -1,3 +1,24 @@
+## happy path for the four questions
+* greet
+  - utter_greet
+  - utter_get_informed_consent
+  - utter_set_expectations
+  <!-- some kind of conversation happen here -->  
+* ask_four_language_questions
+  - utter_introduce_survey
+  - language_questions_form
+  - form{"name": "language_questions_form"}
+  - form{"name": null}
+* goodbye
+  - feedback_form
+  - form{"name": "feedback_form"}
+  - form{"name": null}
+  - utter_goodbye
+
+## happy path for statistics
+* ask_for_stats
+  - action_get_infection_stats
+
 ## answercovid_myth_cure
 * covid_myth_cure
  - utter_answer_covid_myth_cure
@@ -157,4 +178,5 @@
 ## answergreeting
 * greeting
  - utter_answer_greeting
-
+ - utter_get_informed_consent
+ - utter_set_expectations

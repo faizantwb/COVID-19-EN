@@ -381,7 +381,7 @@
 - that is all thank you
 - that's all for today
 
-## intent:greeting
+## intent:greet
 - sup
 - whatsup
 - what do you do

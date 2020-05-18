@@ -44,12 +44,11 @@ class ContactDetailsForm(FormAction):
     @staticmethod
     def required_slots(tracker: Tracker) -> List[Text]:
 
-        return["name", "mail"]
+        return["name"]
 
     def slot_mappings(self) -> Text:
         return {
-        "name": self.from_text(intent=None),
-        "mail": self.from_text(intent=None)
+        "name": self.from_text(intent=None)
         }
 
     def submit(
@@ -108,7 +107,32 @@ class LanguageQuestionsForm(FormAction):
         "language_at_home": self.from_text(),
         "language_for_written_comms": self.from_text(),
         "language_for_verbal_comms": self.from_text(),
-        "preferred_channel": self.from_text(),
+        "preferred_channel": self.from_text()
+        }
+
+    def submit(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        dispatcher.utter_message(template="utter_thanks_for_your_feedback")
+        return[]
+
+
+class LanguageQuestionsForm(FormAction):
+
+    def name(self) -> Text:
+        return "myth_source_form"
+
+    @staticmethod
+    def required_slots(tracker: Tracker) -> List[Text]:
+
+        return["myth_source"]
+
+    def slot_mappings(self) -> Text:
+        return {
+        "myth_source": self.from_text()
         }
 
     def submit(
@@ -145,6 +169,29 @@ class ActionGetInfectionStats(Action):
         active = response_JSON['response'][0]['cases']['active']
         new = response_JSON['response'][0]['cases']['new']
 
-        dispatcher.utter_message(text=f'There are {active} people infected in {country}, a change of {new} on yesterday.')
+        dispatcher.utter_message(template="utter_infection_stats", active = active, new = new, country = country)
+#        dispatcher.utter_message(text=f'There are {active} people infected in {country}, a change of {new} on yesterday.')
+
+        return []
+
+class ActionGetPandemicVideo(Action):
+
+    def name(self) -> Text:
+        return "action_link_to_pandemic_video"
+
+    def run(self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        country = "DRC"
+
+        # dispatcher.utter_message(attachment={
+        #     "type": "video",
+        #     "payload": {
+        #         "title": "Watch Below Video",
+        #         "src": "https://www.youtube.com/embed/-F6h43DRpcU"
+        #     }
+        # })
 
         return []

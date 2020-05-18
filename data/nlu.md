@@ -6,18 +6,22 @@
 - I don't understand you
 
 ## intent:get_contact_details
-- I'd like to get to know you better
+- I'd like to get to know you better?
+- What's your name?
+- Can we be friends?
+- What do they call you?
+
+## intent:covid_explain_pandemic
+- What's a pandemic?
+- What's the difference between a pandemic and an epidemic?
+- What's the difference between a epidemic and an pandemic?
+- Why is Coronavirus called a pandemic?
+- When does a disease become a pandemic?
 
 ## intent:ask_for_stats
 - How many people have the coronavirus
 - Give me some statistics
 - How many people are infected
-
-## intent:get_feedback
-- I'm done
-- We're done
-- That's great, thanks
-- I have all I need
 
 ## intent:affirm
 - yes
@@ -366,7 +370,6 @@
 - good bye
 - that's all
 - bye bye
-- see ya
 - stop
 - stop talking
 - goodnight

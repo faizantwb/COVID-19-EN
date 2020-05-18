@@ -30,6 +30,19 @@
 ## answercovid_myth_garlic
 * covid_myth_garlic
  - utter_answer_covid_myth_garlic
+ - myth_source_form
+ - form{"name": "myth_source_form"}
+ - form{"name": null}
+* goodbye
+   - feedback_form
+   - form{"name": "feedback_form"}
+   - form{"name": null}
+   - utter_goodbye
+
+## answercovid_explain_pandemic
+* covid_explain_pandemic
+ - utter_explain_pandemic
+ - action_link_to_pandemic_video
 
 ## answercovid_myth_saline_rinse
 * covid_myth_saline_rinse

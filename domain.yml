@@ -46,6 +46,7 @@ intents:
 - get_feedback
 - ask_for_stats
 - ask_four_language_questions
+- covid_explain_pandemic
 
 
 forms:
@@ -53,14 +54,18 @@ forms:
   - contact_details_form
   - feedback_form
   - language_questions_form
+  - myth_source_form
 
 actions:
   - action_get_infection_stats
   - action_get_contact_details
   - action_get_feedback
   - action_get_language_info
+  - action_link_to_pandemic_video
 
 slots:
+  myth_source:
+    type: unfeaturized
   language_at_home:
     type: unfeaturized
   language_for_written_comms:
@@ -85,10 +90,20 @@ slots:
     type: unfeaturized
   name:
     type: unfeaturized
-  mail:
-    type: unfeaturized
 
 responses:
+
+    utter_ask_myth_source:
+    - text: "If you don't mind me asking - where did you here that?"
+      buttons:
+      - title: "Friends & Family"
+        payload: "friends_and_family"
+      - title: "Radio"
+        payload: "radio"
+      - title: "WhatsApp"
+        payload: "whatsapp"
+      - title: "Twitter"
+        payload: "twitter"
 
     utter_ask_language_at_home:
     - text: "What language you mainly speak at home?"
@@ -127,6 +142,9 @@ responses:
       - title: "No"
         payload: "/deny"
 
+    utter_infection_stats:
+    - text: "There are currently {active} people infected in {country}, a change of {new} on yesterday."
+
     utter_ask_feedback_reason:
     - text: "Could you tell us what you think we could better?"
 
@@ -160,9 +178,22 @@ responses:
 
     utter_greet_with_name:
     - text: "Hi {name}!"
+    - text: "Hey {name}, how's your day going?"
+
+  # utter_cheer_up:
+  # - text: "Here is something to cheer you up:"
+  #   image: "https://i.imgur.com/nGF1K8f.jpg"
+  #
+    utter_explain_pandemic:
+    - text: "Here's something to explain the differences"
+
+    utter_explain_pandemic2:
+    - text: "Here's something to explain the differences"
+      image: "https://cdn.technologynetworks.com/tn/images/body/endemicvsepidemicimage41568108070133.png"
 
     utter_thanks_for_your_feedback:
-    - text: "Thanks for your feedback!"
+    - text: "Thanks, that's interesting!"
+    - text: "I appreciate your feedback"
 
     utter_answer_covid_myth_cure:
     - text: "To date, there is NO specific medicine recommended to prevent or treat the coronavirus."

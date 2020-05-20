@@ -29,6 +29,7 @@
 - of course
 - that sounds good
 - correct
+- sure
 
 ## intent:deny
 - no

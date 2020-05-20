@@ -48,9 +48,8 @@ intents:
 - ask_four_language_questions
 - covid_explain_pandemic
 
-
 forms:
-  - issue_form
+  - first_time_form
   - contact_details_form
   - feedback_form
   - language_questions_form
@@ -60,11 +59,15 @@ actions:
   - action_get_infection_stats
   - action_get_contact_details
   - action_get_feedback
-  - action_get_language_info
+  # - action_get_language_info
   - action_link_to_pandemic_video
 
 slots:
+  first_time:
+    type: unfeaturized
   myth_source:
+    type: unfeaturized
+  willing_to_do_language_survey:
     type: unfeaturized
   language_at_home:
     type: unfeaturized
@@ -92,6 +95,12 @@ slots:
     type: unfeaturized
 
 responses:
+
+    utter_ask_first_time:
+    - text: "Is this the first time we have chatted?"
+
+    utter_ask_willing_to_do_language_survey:
+    - text: "Would you be willing to tell me a bit about the languages you speak?"
 
     utter_ask_myth_source:
     - text: "If you don't mind me asking - where did you here that?"
@@ -159,13 +168,13 @@ responses:
 
     utter_get_informed_consent:
     - text: "
-    Thanks for using [our chatbot]. Before we start, don't worry, no one can identify
-    you from your questions or comments. But we want you to know that we
-    will collect and analyze what you type. We'll use it to make this service
-    better. We promise that we'll _NEVER_ use your personal information,
-    including your phone number, unless you tell us that we can.
-    By carrying on this conversation, we will assume that you agree. Thank you
-  "
+            Hi. Thanks for using [our chatbot]. Don’t worry, no one can identify
+            you from your questions or comments however we want you to know that we
+            will collect and analyze what you type. If we do, we we’ll use it to make this service
+            better. We promise that we’ll NEVER use your personal information,
+            including your phone number, unless you tell us that we can.
+            By carrying on this conversation, we will assume that you agree. Thank you
+            "
 
     utter_set_expectations:
     - text: "I can answer questions about COVID-19, what would you like to know?"

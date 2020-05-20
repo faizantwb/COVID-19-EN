@@ -61,6 +61,38 @@ class ContactDetailsForm(FormAction):
         return[]
 
 
+class FirstTimeForm(FormAction):
+
+    def name(self) -> Text:
+        return "first_time_form"
+
+    @staticmethod
+    def required_slots(tracker: Tracker) -> List[Text]:
+
+        return["first_time"]
+
+    def slot_mappings(self) -> Text:
+        return {
+        "first_time": [
+            self.from_intent(intent="affirm", value=True),
+            self.from_intent(intent="deny", value=False)
+            ]
+        }
+
+    def submit(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        if tracker.get_slot("first_time") == False:
+            dispatcher.utter_message(text="Welcome back!")
+        else:
+            dispatcher.utter_message(text="Hi! Welcome.")
+
+        return[]
+
+
 class FeedbackForm(FormAction):
 
     def name(self) -> Text:
@@ -69,6 +101,7 @@ class FeedbackForm(FormAction):
     @staticmethod
     def required_slots(tracker: Tracker) -> List[Text]:
 
+        # if the answer to "Did we do OK?" is no...
         if tracker.get_slot("feedback") == False:
             return["feedback", "feedback_reason"]
         else:
@@ -78,7 +111,7 @@ class FeedbackForm(FormAction):
         return {
         "feedback": [
             self.from_intent(intent="affirm", value=True),
-            self.from_intent(intent="deny", value=False),
+            self.from_intent(intent="deny", value=False)
             ],
         "feedback_reason": self.from_text()
         }
@@ -100,10 +133,20 @@ class LanguageQuestionsForm(FormAction):
     @staticmethod
     def required_slots(tracker: Tracker) -> List[Text]:
 
-        return["language_at_home","language_for_written_comms","language_for_verbal_comms","preferred_channel"]
+        # if the answer to "Did we do OK?" is no...
+        if tracker.get_slot("willing_to_do_language_survey") == True:
+            return["willing_to_do_language_survey","language_at_home","language_for_written_comms","language_for_verbal_comms","preferred_channel"]
+        else:
+            return["willing_to_do_language_survey"]
+
+#        return["willing_to_do_survey","language_at_home","language_for_written_comms","language_for_verbal_comms","preferred_channel"]
 
     def slot_mappings(self) -> Text:
         return {
+        "willing_to_do_language_survey": [
+            self.from_intent(intent="affirm", value=True),
+            self.from_intent(intent="deny", value=False)
+        ],
         "language_at_home": self.from_text(),
         "language_for_written_comms": self.from_text(),
         "language_for_verbal_comms": self.from_text(),
@@ -116,7 +159,10 @@ class LanguageQuestionsForm(FormAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict]:
-        dispatcher.utter_message(template="utter_thanks_for_your_feedback")
+        if tracker.get_slot("willing_to_do_language_survey") == True:
+            dispatcher.utter_message(template="utter_thanks_for_your_feedback")
+        else:
+            dispatcher.utter_message(text="OK, that's fine! How can I help you?")
         return[]
 
 

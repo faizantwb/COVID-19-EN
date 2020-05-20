@@ -166,7 +166,7 @@ class LanguageQuestionsForm(FormAction):
         return[]
 
 
-class LanguageQuestionsForm(FormAction):
+class MythSourceForm(FormAction):
 
     def name(self) -> Text:
         return "myth_source_form"

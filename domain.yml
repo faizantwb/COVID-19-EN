@@ -59,7 +59,7 @@ actions:
   - action_get_infection_stats
   - action_get_contact_details
   - action_get_feedback
-  # - action_get_language_info
+  - action_get_language_info
   - action_link_to_pandemic_video
 
 slots:

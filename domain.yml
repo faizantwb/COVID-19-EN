@@ -65,6 +65,10 @@ actions:
 slots:
   first_time:
     type: unfeaturized
+  given_name:
+    type: unfeaturized
+  location:
+    type: unfeaturized
   myth_source:
     type: unfeaturized
   willing_to_do_language_survey:
@@ -99,6 +103,21 @@ responses:
     utter_ask_first_time:
     - text: "Is this the first time we have chatted?"
 
+    utter_ask_given_name:
+    - text: "What do your friends call you?"
+
+    utter_ask_location:
+    - text: "Where are you?"
+      buttons:
+      - title: "N. Kivu"
+        payload: "kivu_nord"
+      - title: "S. Kivu"
+        payload: "kivu_sud"
+      - title: "Ituri"
+        payload: "ituri"
+      - title: "Other"
+        payload: "other"
+
     utter_ask_willing_to_do_language_survey:
     - text: "Would you be willing to tell me a bit about the languages you speak?"
 
@@ -118,10 +137,10 @@ responses:
     - text: "What language you mainly speak at home?"
 
     utter_ask_language_for_written_comms:
-    - text: "Which language do you prefer to read information in?"
+    - text: "Which language do you prefer to *read* information in?"
 
     utter_ask_language_for_verbal_comms:
-    - text: "Which language do you prefer listening to information in?"
+    - text: "And is that the same language you like to *listen* to information in?\n\n If not, which language do you prefer?"
 
     utter_ask_preferred_channel:
     - text: "How do you prefer to receive information"
@@ -130,14 +149,10 @@ responses:
         payload: "in_person"
       - title: "radio"
         payload: "radio"
-      - title: "TV"
-        payload: "TV"
-      - title: "poster"
-        payload: "poster"
       - title: "leaflet"
         payload: "leaflet"
-      - title: "phone call"
-        payload: "phone"
+      - title: "WhatsApp"
+        payload: "WhatsApp"
       - title: "SMS"
         payload: "SMS"
       - title: "Other"
@@ -164,14 +179,15 @@ responses:
     - text: "What's your email address?"
 
     utter_greet:
-    - text: "Hey! How are you?"
+    - text: "Hey! It's nice me talk to you."
+    - text: "Hi. Hope you're having a good day."
 
     utter_get_informed_consent:
     - text: "
-            Hi. Thanks for using [our chatbot]. Don’t worry, no one can identify
+            Hi. Thanks for getting in touch. My name is <~~bot_name~~ Uji> Don’t worry, no one can identify
             you from your questions or comments however we want you to know that we
             will collect and analyze what you type. If we do, we we’ll use it to make this service
-            better. We promise that we’ll NEVER use your personal information,
+            better. We promise that we’ll **NEVER** use your personal information,
             including your phone number, unless you tell us that we can.
             By carrying on this conversation, we will assume that you agree. Thank you
             "
@@ -186,8 +202,8 @@ responses:
             "
 
     utter_greet_with_name:
-    - text: "Hi {name}!"
-    - text: "Hey {name}, how's your day going?"
+    - text: "Hi {given_name}!"
+    - text: "Hey {given_name}, how's your day going?"
 
   # utter_cheer_up:
   # - text: "Here is something to cheer you up:"

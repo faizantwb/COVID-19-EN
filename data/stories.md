@@ -13,6 +13,7 @@
   - language_questions_form
   - form{"name": "language_questions_form"}
   - form{"name": null}
+  <!-- more conversation -->
 * goodbye
   - feedback_form
   - form{"name": "feedback_form"}
@@ -188,9 +189,9 @@
 * fallback
  - utter_answer_fallback
 
-## answergoodbye
+<!-- ## answergoodbye
 * goodbye
- - utter_answer_goodbye
+ - utter_answer_goodbye -->
 
 ## answergreeting
 * greeting

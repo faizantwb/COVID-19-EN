@@ -21,6 +21,7 @@
 ## intent:ask_for_stats
 - How many people have the coronavirus
 - Give me some statistics
+- How many people have the disease?
 - How many people are infected
 
 ## intent:affirm
